@@ -1,0 +1,430 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* Updated to green battle theme with combat-focused colors */
+  --background: 5 20 5;
+  --foreground: 240 255 240;
+  --card: 10 40 10;
+  --card-foreground: 240 255 240;
+  --popover: 10 40 10;
+  --popover-foreground: 240 255 240;
+  --primary: 0 255 0;
+  --primary-foreground: 0 20 0;
+  --secondary: 20 60 20;
+  --secondary-foreground: 240 255 240;
+  --muted: 30 80 30;
+  --muted-foreground: 180 220 180;
+  --accent: 255 215 0;
+  --accent-foreground: 20 20 0;
+  --destructive: 255 50 50;
+  --destructive-foreground: 255 240 240;
+  --border: 40 120 40;
+  --input: 20 60 20;
+  --ring: 0 255 0;
+  --radius: 0.75rem;
+
+  /* Battle-themed colors for combat interface */
+  --battle-green: 0 255 0;
+  --battle-gold: 255 215 0;
+  --battle-red: 255 50 50;
+  --battle-blue: 0 150 255;
+  --neon-green: 57 255 20;
+  --toxic-green: 128 255 0;
+  --electric-blue: 0 191 255;
+  --plasma-purple: 191 0 255;
+  --fire-orange: 255 140 0;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  /* Green battle-themed gradient background */
+  color: rgb(var(--foreground));
+  background: linear-gradient(
+    135deg,
+    rgb(5, 20, 5) 0%,
+    rgb(10, 40, 10) 25%,
+    rgb(0, 30, 0) 50%,
+    rgb(15, 50, 15) 75%,
+    rgb(5, 25, 5) 100%
+  );
+  font-feature-settings: "rlig" 1, "calt" 1;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Added animated background effects for battle atmosphere */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(128, 255, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+  animation: battleAura 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes battleAura {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Enhanced glowing effects for battle interface */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 0, 0.15) 0%,
+    rgba(128, 255, 0, 0.1) 25%,
+    rgba(57, 255, 20, 0.15) 50%,
+    rgba(255, 215, 0, 0.1) 75%,
+    rgba(0, 255, 0, 0.1) 100%
+  );
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), 0 0 40px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.8), 0 0 60px rgba(0, 255, 0, 0.4), 0 0 90px rgba(0, 255, 0, 0.2), inset 0 0
+    30px rgba(0, 255, 0, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(0, 255, 0, 0.6);
+}
+
+.battle-button {
+  background: linear-gradient(135deg, rgba(0, 255, 0, 0.2) 0%, rgba(128, 255, 0, 0.1) 100%);
+  border: 2px solid rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.battle-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.battle-button:hover::before {
+  animation: battleSweep 0.8s ease-in-out;
+}
+
+.battle-button:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.6), 0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 25px rgba(0, 255, 0, 0.2);
+  border-color: rgba(0, 255, 0, 0.8);
+  transform: translateY(-2px);
+}
+
+@keyframes battleSweep {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.neon-border {
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2), inset 0 0 10px rgba(0, 255, 0, 0.1);
+}
+
+.game-card {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 0, 0.08) 0%,
+    rgba(10, 40, 10, 0.9) 25%,
+    rgba(20, 60, 20, 0.8) 75%,
+    rgba(0, 255, 0, 0.05) 100%
+  );
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.game-card:hover::before {
+  left: 100%;
+}
+
+.game-card:hover {
+  border-color: rgba(0, 255, 0, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 255, 0, 0.2), 0 0 20px rgba(0, 255, 0, 0.3);
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* Battle-themed leaderboard colors */
+.leaderboard-gold {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.leaderboard-silver {
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.2) 0%, rgba(192, 192, 192, 0.05) 100%);
+  border: 1px solid rgba(192, 192, 192, 0.5);
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+}
+
+.leaderboard-bronze {
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.2) 0%, rgba(205, 127, 50, 0.05) 100%);
+  border: 1px solid rgba(205, 127, 50, 0.5);
+  box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
+}
+
+.battle-arena {
+  background: radial-gradient(circle at center, rgba(0, 255, 0, 0.15) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(10, 40, 10, 0.8) 0%, rgba(5, 20, 5, 0.9) 100%);
+  border: 3px solid rgba(0, 255, 0, 0.4);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3), inset 0 0 30px rgba(0, 255, 0, 0.1);
+}
+
+/* Enhanced animations for battle effects */
+.target-spawn {
+  animation: battleSpawn 0.4s ease-out;
+}
+
+@keyframes battleSpawn {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(0, 255, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+  }
+}
+
+.score-popup {
+  animation: battleScore 1.2s ease-out forwards;
+}
+
+@keyframes battleScore {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    color: rgb(0, 255, 0);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.5);
+    color: rgb(255, 215, 0);
+  }
+  100% {
+    transform: translateY(-60px) scale(1.8);
+    opacity: 0;
+    color: rgb(255, 50, 50);
+  }
+}
+
+.animate-pulse-battle {
+  animation: battlePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes battlePulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+  }
+}
+
+@keyframes battleFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+.animate-battle-float {
+  animation: battleFloat 4s ease-in-out infinite;
+}
+
+.glass-effect {
+  background: rgba(10, 40, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+/* Added combat-themed particle effects */
+.battle-particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.battle-particles::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 0, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(128, 255, 0, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(57, 255, 20, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(0, 255, 0, 0.2), transparent);
+  background-repeat: repeat;
+  background-size: 150px 100px;
+  animation: battleParticles 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes battleParticles {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
+/* Added floating animations for NFT backgrounds */
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+}
+
+@keyframes float2 {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(-8deg);
+  }
+}
+
+@keyframes float3 {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+  75% {
+    transform: translateY(-30px) rotate(-5deg);
+  }
+}
+
+.animate-float-1 {
+  animation: float1 6s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float2 8s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float3 7s ease-in-out infinite;
+}
+
+/* Added battle-themed color utilities */
+.text-battle-gold {
+  color: rgb(255, 215, 0);
+}
+
+.text-battle-red {
+  color: rgb(255, 50, 50);
+}
+
+.text-neon-blue {
+  color: rgb(0, 150, 255);
+}
+
+.text-neon-purple {
+  color: rgb(191, 0, 255);
+}
+
+/* Enhanced hover effects for interactive elements */
+.interactive-glow {
+  transition: all 0.3s ease;
+}
+
+.interactive-glow:hover {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.6));
+  transform: scale(1.05);
+}
+
+/* Added pulsing effect for live elements */
+@keyframes livePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.4);
+  }
+}
+
+.live-indicator {
+  animation: livePulse 2s ease-in-out infinite;
+}
